@@ -28,14 +28,15 @@ public class OauthApplication {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http
-			.authorizeHttpRequests(a -> a
+			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/", "/error", "/webjars/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(e -> e
 				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 			)
-			.oauth2Login();
+			.oauth2Login(oauth -> {}
+			);
 		// @formatter:on
 		return http.build();
 	}
