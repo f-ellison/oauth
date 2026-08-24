@@ -6,4 +6,7 @@ spring:
           github:
             clientId: github-client-id
             clientSecret: github-client-secret
-            
+  web:
+    resources:
+      chain:
+        enabled: true
