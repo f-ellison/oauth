@@ -29,12 +29,17 @@
         $.ajaxSetup({
               beforeSend : function(xhr, settings) {
                 if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
-                  if (!(/^http:.*/.test(settings.url) || /^https:.*/
-                    .test(settings.url))) {
-                    // Only send the token to relative URLs i.e. locally.
-                    xhr.setRequestHeader("X-XSRF-TOKEN",
-                      Cookies.get('XSRF-TOKEN'));
-                  }
+                    // Check if the URL is relative (doesn't start with http/https) OR points to your current domain
+                    var isRelative = !(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url));
+                    var isSameOrigin = settings.url.indexOf(window.location.origin) === 0;
+
+                    if (isRelative || isSameOrigin) {
+                        // Ensure JavaScript-cookie library (Cookies.get) is loaded in your HTML
+                        var token = Cookies.get('XSRF-TOKEN');
+                        if (token) {
+                            xhr.setRequestHeader("X-XSRF-TOKEN", token);
+                        }
+                    }
                 }
               }
         });
