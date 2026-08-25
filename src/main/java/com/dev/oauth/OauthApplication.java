@@ -36,6 +36,9 @@ public class OauthApplication {
 				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 			)
 			.oauth2Login(oauth -> {}
+			)
+			.logout(logout -> logout
+				.logoutSuccessUrl("/").permitAll()
 			);
 		// @formatter:on
 		return http.build();
