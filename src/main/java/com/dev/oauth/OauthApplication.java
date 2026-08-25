@@ -29,7 +29,7 @@ public class OauthApplication {
 		// @formatter:off
 		http
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/", "/error", "/webjars/**").permitAll()
+				.requestMatchers("/", "/index.html", "/error", "/webjars/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.exceptionHandling(e -> e
